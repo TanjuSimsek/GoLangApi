@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	fmt.Println("Api Started Listening ..")
+	fmt.Println("Api Started Listening ...")
 
 	app.Start()
 
