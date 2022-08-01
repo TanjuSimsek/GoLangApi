@@ -15,7 +15,8 @@ func Start() {
 
 	//Wiring
 
-	ch := CustomerHandlers{service.NewCustomerService(domain.NewCustomerRepositoryStub())}
+	// ch := CustomerHandlers{service.NewCustomerService(domain.NewCustomerRepositoryStub())}
+	ch := CustomerHandlers{service.NewCustomerService(domain.NewCustomerRepositoryDb())}
 	//
 	router.HandleFunc("/getAllCustomers", ch.getAllCustomers).Methods(http.MethodGet)
 
