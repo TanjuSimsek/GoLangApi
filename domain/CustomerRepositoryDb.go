@@ -2,8 +2,8 @@ package domain
 
 import (
 	"GoLangApi/errs"
+	"GoLangApi/logger"
 	"database/sql"
-	"log"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -29,7 +29,7 @@ func (d CustomerRepositoryDb) FindAll() ([]Customer, error) {
 	rows, err := d.client.Query(findAllSql)
 	if err != nil {
 
-		log.Println("Error while querying customer table " + err.Error())
+		logger.Error("Error while querying customer table " + err.Error())
 		return nil, err
 	}
 	customers := make([]Customer, 0)
@@ -39,7 +39,7 @@ func (d CustomerRepositoryDb) FindAll() ([]Customer, error) {
 		err := rows.Scan(&c.Id, &c.Name, &c.City, &c.Zipcode, &c.DateofBirth, &c.Status)
 		if err != nil {
 
-			log.Println("Error while scaning customer table " + err.Error())
+			logger.Error("Error while scaning customer table " + err.Error())
 			return nil, err
 		}
 		customers = append(customers, c)
@@ -73,7 +73,7 @@ func (d CustomerRepositoryDb) ById(id string) (*Customer, *errs.AppError) {
 		if err == sql.ErrNoRows {
 			return nil, errs.NewNotFoundError("Customer not found")
 		} else {
-			log.Println("Error while scaning customer table " + err.Error())
+			logger.Error("Error while scaning customer table " + err.Error())
 			return nil, errs.NewUnexpectedError("Unexpected database error")
 		}
 
