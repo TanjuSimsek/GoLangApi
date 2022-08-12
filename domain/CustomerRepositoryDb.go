@@ -64,18 +64,23 @@ func (d CustomerRepositoryDb) FindAll(status string) ([]Customer, *errs.AppError
 	return customers, nil
 }
 
-func NewCustomerRepositoryDb() CustomerRepositoryDb {
+// func NewCustomerRepositoryDb() CustomerRepositoryDb {
 
-	client, err := sqlx.Open("mysql", "root:558133Mt*@tcp(localhost:3306)/banking")
-	if err != nil {
-		panic(err)
-	}
-	// See "Important settings" section.
-	client.SetConnMaxLifetime(time.Minute * 3)
-	client.SetMaxOpenConns(10)
-	client.SetMaxIdleConns(10)
+// 	client, err := sqlx.Open("mysql", "root:558133Mt*@tcp(localhost:3306)/banking")
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	// See "Important settings" section.
+// 	client.SetConnMaxLifetime(time.Minute * 3)
+// 	client.SetMaxOpenConns(10)
+// 	client.SetMaxIdleConns(10)
 
-	return CustomerRepositoryDb{client: client}
+// 	return CustomerRepositoryDb{client: client}
+
+// }
+func NewCustomerRepositoryDb(dbClinet *sqlx.DB) CustomerRepositoryDb {
+
+	return CustomerRepositoryDb{dbClinet}
 
 }
 func (d CustomerRepositoryDb) ById(id string) (*Customer, *errs.AppError) {
