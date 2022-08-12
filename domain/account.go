@@ -1,6 +1,9 @@
 package domain
 
-import "GoLangApi/errs"
+import (
+	"GoLangApi/dto"
+	"GoLangApi/errs"
+)
 
 type Account struct {
 	AccountId   string
@@ -13,4 +16,10 @@ type Account struct {
 
 type AccountRepository interface {
 	Save(Account) (*Account, *errs.AppError)
+}
+
+func (a Account) ToNewAccountResponseDto() dto.NewAccountResponse {
+
+	return dto.NewAccountResponse{AccountId: a.AccountId}
+
 }
